@@ -34,35 +34,33 @@ dim = {'normal': {'h': 3, 'asp': 1.2}, 'big': {'h': 8, 'asp': 0.5}}
 
 # plot a distribution plot
 def displot(title, feature, frame, size="normal", color='g'):
-    pass
-    # global dim
-    # h = dim[size]['h']
-    # asp = dim[size]['asp']
-    # g = sns.displot(frame, x=feature, color=color, height=h, aspect=asp)
-    # if title != 'notitle':
-    #     g.fig.suptitle(title)
-    #     g.fig.subplots_adjust(top=0.9)
-    # #plt.show()
+    global dim
+    h = dim[size]['h']
+    asp = dim[size]['asp']
+    g = sns.displot(frame, x=feature, color=color, height=h, aspect=asp)
+    if title != 'notitle':
+        g.fig.suptitle(title)
+        g.fig.subplots_adjust(top=0.9)
+    #plt.show()
 
 
 # plot a categorical plot
 def catplot(title, feature, df, size="normal"):
-    pass
-    # try:
-    #     global dim
-    #     h = dim[size]['h']
-    #     asp = dim[size]['asp']
-    #     plt.title(title)
-    #     g = sns.catplot(y=feature, kind="count", hue=target_variable, height=h, aspect=asp, data=df, orient='h',
-    #                     palette=sns.color_palette(
-    #                         ['green', 'gray', 'yellow', 'purple', 'black', 'fuchsia', 'orange', 'blue', 'red',
-    #                          'brown']))
-    #     if title != 'notitle':
-    #         g.fig.suptitle(title)
-    #         g.fig.subplots_adjust(top=0.9)
-    #     #plt.show()
-    # except:
-    #     print('---------> ' + title)
+    try:
+        global dim
+        h = dim[size]['h']
+        asp = dim[size]['asp']
+        plt.title(title)
+        g = sns.catplot(y=feature, kind="count", hue=target_variable, height=h, aspect=asp, data=df, orient='h',
+                        palette=sns.color_palette(
+                            ['green', 'gray', 'yellow', 'purple', 'black', 'fuchsia', 'orange', 'blue', 'red',
+                             'brown']))
+        if title != 'notitle':
+            g.fig.suptitle(title)
+            g.fig.subplots_adjust(top=0.9)
+        #plt.show()
+    except:
+        print('---------> ' + title)
 
 
 ###################################################
@@ -611,8 +609,8 @@ for model in models_json_writable:
 with open("models_results.json", "w") as f:
     json.dump(models_json_writable, f, indent=4)
 
-models_with_bagging_json_writable = copy.deepcopy(models)
-for model in models_json_writable:
-    del model['model']
+models_with_bagging_json_writable = copy.deepcopy(models_with_bagging)
+for model_name in models_with_bagging_json_writable:
+    del models_with_bagging_json_writable[model_name]['model']
 with open("models_with_bagging_metrics.json", "w") as f:
     json.dump(models_with_bagging_json_writable, f, indent=4)
